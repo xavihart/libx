@@ -8,6 +8,13 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 
+from datetime import datetime
+
+
+def get_datestirng():
+    current_datetime = datetime.now()
+    dtime = current_datetime.strftime('%m-%d-%H-%M')
+    return dtime
 
 def explore_array(name, value, p=3):
     if isinstance(value, np.ndarray):
@@ -20,6 +27,8 @@ def explore_array(name, value, p=3):
         cprint('the input should be numpy.ndarray or torch.Tensor', 'r')
         
     return 
+
+
 
 
 def explore(p=3, **kwargs):
