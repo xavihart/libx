@@ -47,7 +47,7 @@ def load_png(p, size):
     x = transform(x)
     return x
 
-def cprint(x, c):
+def cprint(x, *args, c='y'):
     c_t = ""
     if c == 'r':
         c_t = Fore.RED
@@ -55,7 +55,7 @@ def cprint(x, c):
         c_t = Fore.GREEN
     elif c == 'y':
         c_t = Fore.YELLOW
-    print(c_t, x)
+    print(c_t, x, *args)
     print(Style.RESET_ALL)
 
 def si(x, p, to_01=False, normalize=False):
