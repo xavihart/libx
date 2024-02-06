@@ -11,6 +11,24 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
+
+def pad(x, dim, size, mode='zero'):
+    if isinstance(x, np.ndarray):
+        if mode == 'zero':
+            pad_shape = list(x.shape)
+            pad_shape[dim] = size - pad_shape[dim]
+            return np.concatenate(
+                [x, np.zeros(pad_shape)], dim
+            )
+    elif isinstance(x, torch.Tensor):
+        if mode == 'zero':
+            pad_shape = list(x.shape)
+            pad_shape[dim] = size - pad_shape[dim]
+            return torch.cat(
+                [x, torch.zeros(pad_shape)], dim
+            )
+
+
 def get_datestirng():
     current_datetime = datetime.now()
     dtime = current_datetime.strftime('%m-%d-%H-%M')
