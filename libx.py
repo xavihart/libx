@@ -6,11 +6,18 @@ import os
 import torchvision.transforms as transforms
 from PIL import Image
 import matplotlib.pyplot as plt
-
-
 from datetime import datetime
+import random
 
 
+def seed_everything(seed: int):
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = True
 
 def pad(x, dim, size, mode='zero'):
     if isinstance(x, np.ndarray):
@@ -47,21 +54,17 @@ def explore_array(name, value, p=3):
     return 
 
 
-
-
 def explore(p=3, **kwargs):
     for k, v in kwargs.items():
         explore_array(k, v, p)
 
 def load_png(p, size):
     x = Image.open(p).convert('RGB')
-
     # Define a transformation to resize the image and convert it to a tensor
     transform = transforms.Compose([
         transforms.Resize((size, size)),
         transforms.ToTensor(),
     ])
-
     x = transform(x)
     return x
 
@@ -76,7 +79,7 @@ def cprint(x, *args, c='y'):
     print(c_t, x, *args)
     print(Style.RESET_ALL)
 
-def si(x, p, to_01=False, normalize=False):
+def si(x, p='demo.png', to_01=False, normalize=False):
     if isinstance(x, np.ndarray):
         x = torch.from_numpy(x)
     if to_01:
